@@ -1,6 +1,7 @@
 package com.app.splitwise.utils.passwordencoder.impl;
 
 import com.app.splitwise.utils.passwordencoder.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -8,16 +9,16 @@ import org.springframework.stereotype.Service;
  * @project splitwise-scalar
  */
 @Service
-public class BCryptPasswordEncoder implements PasswordEncoder {
-
+public class BCryptEncoder implements PasswordEncoder {
+  private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
   @Override
   public String encode(String password) {
-    return null;
+    return encoder.encode(password);
   }
 
   @Override
   public boolean matches(String plainText, String encodePassword) {
-    return false;
+    return encoder.matches(plainText, encodePassword);
   }
 }

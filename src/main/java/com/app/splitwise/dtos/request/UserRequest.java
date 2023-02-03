@@ -14,11 +14,11 @@ public class UserRequest {
   private String password;
 
 
-  public User toUser() {
+  public User toUser(String hashedPassword) {
     User user = new User();
     user.setName(this.name);
     user.setPhoneNumber(this.phoneNumber);
-    user.setHashedPassword(this.password);
+    user.setHashedPassword(hashedPassword);
     return user;
   }
 }

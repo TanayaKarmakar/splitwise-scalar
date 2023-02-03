@@ -6,6 +6,7 @@ import com.app.splitwise.exceptions.NotFoundException;
 import com.app.splitwise.models.User;
 import com.app.splitwise.repositories.UserRepository;
 import com.app.splitwise.services.UserService;
+import com.app.splitwise.utils.passwordencoder.PasswordEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,10 +19,13 @@ public class UserServiceImpl implements UserService {
   @Autowired
   private UserRepository userRepository;
 
+  @Autowired
+  private PasswordEncoder passwordEncoder;
+
   @Override
   public UserDTO createUser(UserRequest userRequest) {
-    User user = userRequest.toUser();
-
+    String hashedPassword = passwordEncoder.encode(userRequest.getPassword());
+    User user = userRequest.toUser(hashedPassword);
     User savedUser = userRepository.save(user);
     return savedUser.toUserDTO();
   }
